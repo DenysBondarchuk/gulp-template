@@ -11,7 +11,7 @@ const runSequence 	= require('run-sequence');
 const fs 			= require('fs');
 const wait 			= require('gulp-wait');
 const svgmin 		= require('gulp-svgmin');
-const zip 			= require('gulp-zip');
+const zipper 		= require("zip-local");
 
 let path = {
 	src: {
@@ -178,9 +178,7 @@ gulp.task('make', function() {
 });
 
 gulp.task('archive', function() {
-    gulp.src('build/**/*')
-        .pipe(zip('archive.zip'))
-        .pipe(gulp.dest('build'))
+	zipper.sync.zip("build/").compress().save("build/archive.zip");
 });
 
 gulp.task('watch', ['clean','browser-sync', 'html', 'style', 'scripts', 'img', 'fonts'], function() {
